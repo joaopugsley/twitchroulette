@@ -104,9 +104,17 @@ export default function Roulette({ participants = [] }) {
             </div>
             
             {
-                winner ? (
+                winner && rolling ? (
                     <div className="w-full flex flex-col justify-center items-center">
                         <h1 className="text-gray-500 text-sm mt-3 font-extralight select-none">{t("roulette_winner")} <a className="hover:text-purple select-text">{winner.name}</a></h1>
+                    </div>
+                ) : null
+            }
+
+            {
+                !winner && rolling === true ? (
+                    <div className="w-full flex flex-col justify-center items-center">
+                        <h1 className="text-gray-500 text-sm mt-3 font-extralight select-none">{t("roulette_awaiting_winner")}</h1>
                     </div>
                 ) : null
             }

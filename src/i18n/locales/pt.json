@@ -27,6 +27,7 @@
         "roulette_entries_text": "participantes",
         "roulette_draw_button": "SORTEAR",
         "roulette_winner": "VENCEDOR:",
+        "roulette_awaiting_winner": "Aguardando resultado...",
         "footer_text_1": "Feito com",
         "footer_text_2": "por"
     }

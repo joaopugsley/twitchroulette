@@ -27,6 +27,7 @@
         "roulette_entries_text": "entries",
         "roulette_draw_button": "PICK A WINNER",
         "roulette_winner": "WINNER:",
+        "roulette_awaiting_winner": "Waiting for result...",
         "footer_text_1": "Made with",
         "footer_text_2": "by"
     }
