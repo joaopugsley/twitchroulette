@@ -116,6 +116,7 @@ export default function Home() {
 
   return (
     <main>
+      <title>TwitchRoulette</title>
       <div className="bg-purple w-screen h-screen flex justify-center items-center scroll-smooth">
         <div className="absolute right-2 top-2 flex flex-row justify-between w-[90px] select-none">
           <img alt="Português Brasileiro (pt-BR)" onClick={() => {changeLanguage("pt")}} className="w-[40px] h-auto cursor-pointer hover:scale-110" src="https://media.discordapp.net/attachments/1085074834523967569/1092597129018617886/image.png"/>
