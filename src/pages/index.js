@@ -23,59 +23,6 @@ export default function Home() {
   const [started, setStarted] = useState(false);
   const [finished, setFinished] = useState(false);
 
-  useEffect(() => {
-
-    if(lang !== language) {
-
-      changeLanguage(lang);
-      localStorage.setItem("preferredLanguage", lang);
-
-    }
-
-  }, [lang]);
-
-  useEffect(() => {
-
-    const userLang = localStorage.getItem("preferredLanguage");
-
-    if(userLang) {
-      setLang(userLang);
-    }
-
-  }, []);
-
-  useEffect(() => {
-
-    if(started === true && connected === false) {
-      setConnected(true);
-      connect(channel);
-    }
-
-  }, [started, connected])
-
-  useEffect(() => {
-
-    if(ws) {
-
-      ws.onmessage = (event) => {
-        if(!event.data.includes("PRIVMSG")) return;
-  
-        const message = event.data.split(";");
-  
-        const author = message.find(msg => msg.startsWith("display-name")).split("=")[1];
-        const text = message.find(msg => msg.includes(`PRIVMSG #${channel}`)).split(`PRIVMSG #${channel} :`)[1];
-        const isSubscriber = message.find(msg => msg.startsWith("subscriber=")).split("subscriber=")[1] == "1";
-
-        if(keyword && text.toLowerCase().includes(keyword.toLowerCase())) {
-          formatParticipant(author, isSubscriber);
-        }
-  
-      };
-
-    }
-
-  }, [ws, connected, started, finished, participants])
-
   const formatParticipant = (user, isSubscriber) => {
 
     if(started !== true || finished === true) return false; // giveaway not open
@@ -120,6 +67,59 @@ export default function Home() {
     setSocket(socket);
 
   };
+
+  useEffect(() => {
+
+    if(lang !== language) {
+
+      changeLanguage(lang);
+      localStorage.setItem("preferredLanguage", lang);
+
+    }
+
+  }, [lang, changeLanguage, lang]);
+
+  useEffect(() => {
+
+    const userLang = localStorage.getItem("preferredLanguage");
+
+    if(userLang) {
+      setLang(userLang);
+    }
+
+  }, []);
+
+  useEffect(() => {
+
+    if(started === true && connected === false) {
+      setConnected(true);
+      connect(channel);
+    }
+
+  }, [started, connected, channel])
+
+  useEffect(() => {
+
+    if(ws) {
+
+      ws.onmessage = (event) => {
+        if(!event.data.includes("PRIVMSG")) return;
+  
+        const message = event.data.split(";");
+  
+        const author = message.find(msg => msg.startsWith("display-name")).split("=")[1];
+        const text = message.find(msg => msg.includes(`PRIVMSG #${channel}`)).split(`PRIVMSG #${channel} :`)[1];
+        const isSubscriber = message.find(msg => msg.startsWith("subscriber=")).split("subscriber=")[1] == "1";
+
+        if(keyword && text.toLowerCase().includes(keyword.toLowerCase())) {
+          formatParticipant(author, isSubscriber);
+        }
+  
+      };
+
+    }
+
+  }, [ws, connected, started, finished, participants, channel, formatParticipant, keyword])
 
   const scrollToStart = () => {
     scroller.scrollTo("start", {
