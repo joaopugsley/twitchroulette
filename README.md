@@ -1,4 +1,4 @@
-## TwitchRoulette.live
+## TwitchRoulette
 - Você pode testar o TwitchRoulette clicando <a href="https://twitchroulette.live/">aqui</a>.
 
 - Qualquer bug/problema deve ser reportado <a href="https://github.com/insannityxd/twitchroulette/issues">aqui</a> ou através do email joaopugsleyy@gmail.com.
