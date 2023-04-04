@@ -152,8 +152,8 @@ export default function Home() {
           <div onClick={scrollToStart} className="border border-white mt-3 pl-[20px] pr-[20px] h-[40px] rounded-xl flex flex-row justify-center items-center text-white select-none hover:scale-105 transition-all ease-in-out duration-50">{t("homescreen_start_button")}</div>
         </div>
       </div>
-      <div id="start" className="relative bg-gray-100 w-screen h-[100vh] flex flex-col justify-center items-center scroll-smooth sm:h-[120vh]">
-        <div className="text-default text-3xl font-bold select-none">{t("config_title")}</div>
+      <div id="start" className="relative bg-gray-100 w-screen min-h-[100vh] pt-[10vh] pb-[10vh] flex flex-col justify-center items-center scroll-smooth">
+        <div className="text-default text-3xl font-bold select-none break-all sm:text-xl">{t("config_title")}</div>
         <div className="bg-white pt-5 pb-5 pl-7 pr-7 mt-7 rounded-xl drop-shadow-xl flex flex-col justify-center w-2/5 sm:w-4/5">
           <h1 className="text-dark-default text-2xl font-extrabold select-none sm:text-[3.5vw]">{t("config_channellink")}<a href="https://twitch.tv/" className="text-purple hover:cursor-pointer">Twitch</a></h1>
           <input type="text" disabled={started} onChange={event => formatChannel(event.target.value)} id="channel" className="bg-gray-100 mt-2 p-2 rounded-md border text-default border-gray-300 focus:border-purple w-full" placeholder="URL"/>
@@ -195,7 +195,7 @@ export default function Home() {
       </div>
       { started ? (
         <div id="roulette" className="relative bg-default w-screen h-[100vh] flex flex-col justify-center items-center scroll-smooth">
-          <div className="text-white text-3xl font-bold select-none">{title} - twitch.tv/{channel}</div>
+          <div className="text-white text-3xl font-bold select-none break-all sm:text-xl">{title} - twitch.tv/{channel}</div>
           { !finished ? (
             <div className="bg-white pt-5 pb-5 pl-7 pr-7 mt-7 rounded-xl drop-shadow-xl flex flex-col justify-center w-2/5 sm:w-4/5">
               <div className="flex flex-row items-center xl:flex-col">

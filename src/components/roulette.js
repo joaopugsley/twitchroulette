@@ -78,7 +78,7 @@ export default function Roulette({ participants = [] }) {
     };
 
     return (
-        <div className="w-2/5 mt-7 pt-3 pb-3 bg-white rounded-xl drop-shadow-xl flex flex-col justify-center items-center sm:w-11/12">
+        <div className="relative w-2/5 mt-7 pt-3 pb-3 bg-white rounded-xl drop-shadow-xl flex flex-col justify-center items-center sm:w-11/12">
             <h1 className="font-extralight select-none text-gray-500 xl:relative xl:right-0">{participants.length} {t("active_entries_text")}</h1>
             {
                 rolling ? (
