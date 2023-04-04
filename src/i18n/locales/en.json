@@ -29,6 +29,9 @@
         "roulette_winner": "WINNER:",
         "roulette_awaiting_winner": "Waiting for result...",
         "footer_text_1": "Made with",
-        "footer_text_2": "by"
+        "footer_text_2": "by",
+        "404_error_title": "Opps, something went wrong.",
+        "404_error_description": "Sorry, we couldn't find your page",
+        "404_homepage_button": "Back to Homepage"
     }
 }
