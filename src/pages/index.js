@@ -77,7 +77,7 @@ export default function Home() {
 
     }
 
-  }, [lang, changeLanguage, lang]);
+  }, [lang, changeLanguage, language]);
 
   useEffect(() => {
 
@@ -119,7 +119,7 @@ export default function Home() {
 
     }
 
-  }, [ws, connected, started, finished, participants, channel, formatParticipant, keyword])
+  }, [ws, connected, started, finished, participants, channel, keyword])
 
   const scrollToStart = () => {
     scroller.scrollTo("start", {
