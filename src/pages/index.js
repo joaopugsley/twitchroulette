@@ -17,13 +17,14 @@ export default function Home() {
   const [title, setTitle] = useState(language == "en" ? "New Giveaway!" : "Novo Sorteio!");
   const [keyword, setKeyword] = useState(null);
   const [subOnly, setSubOnly] = useState(false);
+  const [multipleEntries, setMultipleEntries] = useState(false);
   const [subMultiplier, setSubMultiplier] = useState(1);
   const [participants, setParticipants] = useState([]);
 
   const [started, setStarted] = useState(false);
   const [finished, setFinished] = useState(false);
 
-  const formatParticipant = (user, isSubscriber) => {
+  const formatParticipant = (user, isSubscriber, multipleEntries) => {
 
     if(started !== true || finished === true) return false; // giveaway not open
 
@@ -33,7 +34,7 @@ export default function Home() {
 
     const registered = participants.some(p => p.name == user);
 
-    if(registered === true) return false; // ja está participando
+    if(registered === true && multipleEntries !== true) return false; // ja está participando
 
     setParticipants(oldArray => [...oldArray, {name: user, multiplier: multiplier}]);
 
@@ -112,14 +113,14 @@ export default function Home() {
         const isSubscriber = message.find(msg => msg.startsWith("subscriber=")).split("subscriber=")[1] == "1";
 
         if(keyword && text.toLowerCase().includes(keyword.toLowerCase())) {
-          formatParticipant(author, isSubscriber);
+          formatParticipant(author, isSubscriber, multipleEntries);
         }
   
       };
 
     }
 
-  }, [ws, connected, started, finished, participants, channel, keyword])
+  }, [ws, connected, started, finished, participants, channel, keyword, multipleEntries])
 
   const scrollToStart = () => {
     scroller.scrollTo("start", {
@@ -149,14 +150,14 @@ export default function Home() {
         </div>
         <div className="p-10 flex flex-col justify-center items-center">
           <h1 className="text-4xl font-extrabold text-white text-center select-none">TwitchRoulette!</h1>
-          <span className="text-1xl mt-1 font-extralight text-gray-300 text-center select-none hover:text-white transition-all sm:text-[2.8vw]">{t("homescreen_slogan_1")}<a className="font-extrabold">stream</a>{t("homescreen_slogan_2")}</span>
+          <h2 className="text-1xl mt-1 font-extralight text-gray-300 text-center select-none hover:text-white transition-all sm:text-[2.8vw]">{t("homescreen_slogan_1")}<a className="font-extrabold">stream</a>{t("homescreen_slogan_2")}</h2>
           <div onClick={scrollToStart} className="border border-white mt-3 pl-[20px] pr-[20px] h-[40px] rounded-xl flex flex-row justify-center items-center text-white select-none hover:scale-105 hover:bg-white hover:text-purple transition-all ease-in-out duration-50">{t("homescreen_start_button")}</div>
         </div>
       </div>
       <div id="start" className="relative bg-gray-100 w-screen min-h-[100vh] pt-[10vh] pb-[10vh] flex flex-col justify-center items-center scroll-smooth">
         <div className="text-default text-3xl font-bold select-none break-all sm:text-xl">{t("config_title")}</div>
         <div className="bg-white pt-5 pb-5 pl-7 pr-7 mt-7 rounded-xl drop-shadow-xl flex flex-col justify-center w-2/5 sm:w-4/5">
-          <h3 className="text-dark-default text-2xl font-extrabold select-none sm:text-[3.5vw]">{t("config_channellink")}<a href="https://twitch.tv/" className="text-purple hover:cursor-pointer">Twitch</a></h3>
+          <h3 className="text-dark-default text-2xl font-extrabold select-none sm:text-[3.5vw]">{t("config_channellink")}<a href="https://twitch.tv/" target="_blank" className="text-purple hover:cursor-pointer">Twitch</a></h3>
           <input type="text" disabled={started} onChange={event => formatChannel(event.target.value)} id="channel" className="bg-gray-100 mt-2 p-2 rounded-md border text-default border-gray-300 focus:border-purple w-full" placeholder="URL"/>
         </div>
         { channel ? (
@@ -178,6 +179,10 @@ export default function Home() {
             <div className="mt-3 flex flex-row items-center">
               <input type="checkbox" disabled={started} value="" onChange={(event) => setSubOnly(event.target.checked)} className="w-4 h-4 text-purple accent-purple bg-gray-300 border-gray-300 rounded"/>
               <label className="ml-2 text-sm text-default">{t("config_giveaway_subonly_1")}<a className="text-purple font-bold">{t("config_giveaway_subonly_2")}</a>.</label>
+            </div>
+            <div className="mt-3 flex flex-row items-center">
+              <input type="checkbox" disabled={started} value="" onChange={(event) => setMultipleEntries(event.target.checked)} className="w-4 h-4 text-purple accent-purple bg-gray-300 border-gray-300 rounded"/>
+              <label className="ml-2 text-sm text-default">{t("config_giveaway_multiple_entries")}.</label>
             </div>
             <h3 className="text-dark-default text-2xl mt-4 font-extrabold select-none sm:text-[4vw]">{t("config_giveaway_bonus")}</h3>
             <div className="mt-3 flex flex-col">
