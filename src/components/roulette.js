@@ -79,7 +79,7 @@ export default function Roulette({ participants = [] }) {
 
     return (
         <div className="relative w-2/5 mt-7 pt-3 pb-3 bg-white rounded-xl drop-shadow-xl flex flex-col justify-center items-center sm:w-11/12">
-            <h1 className="font-extralight select-none text-gray-500 xl:relative xl:right-0">{participants.length} {t("active_entries_text")}</h1>
+            <span className="font-extralight select-none text-gray-500 xl:relative xl:right-0">{participants.length} {t("active_entries_text")}</span>
             {
                 rolling ? (
                     <div className="absolute top-3 mt-8 bg-purple w-[10px] h-[10px] z-50 rotate-45"></div>
@@ -92,8 +92,8 @@ export default function Roulette({ participants = [] }) {
                         rouletteFill.map((participant, i) => (
 
                             <div key={"proulette-" + i} className="w-[100px] h-[100px] bg-white border-[1px] border-r-0 border-solid border-purple flex flex-col justify-center items-center overflow-hidden">
-                                <h1 className="text-purple text-extrabold text-[0.6vw] sm:text-[3vw]">{participant.name}</h1>
-                                <h1 className="text-white text-extralight text-sm select-none bg-purple mt-[5px] pt-[1px] pb-[1px] pl-[5px] pr-[5px]">{`${participant.multiplier || 1}x`}</h1>
+                                <span className="text-purple text-extrabold text-[0.6vw] sm:text-[3vw]">{participant.name}</span>
+                                <span className="text-white text-extralight text-sm select-none bg-purple mt-[5px] pt-[1px] pb-[1px] pl-[5px] pr-[5px]">{`${participant.multiplier || 1}x`}</span>
                             </div>
 
                         ))
@@ -106,7 +106,7 @@ export default function Roulette({ participants = [] }) {
             {
                 winner && rolling ? (
                     <div className="w-full flex flex-col justify-center items-center">
-                        <h1 className="text-gray-500 text-sm mt-3 font-extralight select-none">{t("roulette_winner")} <a className="hover:text-purple select-text">{winner.name}</a></h1>
+                        <span className="text-gray-500 text-sm mt-3 font-extralight select-none">{t("roulette_winner")} <a className="hover:text-purple select-text">{winner.name}</a></span>
                     </div>
                 ) : null
             }
@@ -114,7 +114,7 @@ export default function Roulette({ participants = [] }) {
             {
                 !winner && rolling === true ? (
                     <div className="w-full flex flex-col justify-center items-center">
-                        <h1 className="text-gray-500 text-sm mt-3 font-extralight select-none">{t("roulette_awaiting_winner")}</h1>
+                        <span className="text-gray-500 text-sm mt-3 font-extralight select-none">{t("roulette_awaiting_winner")}</span>
                     </div>
                 ) : null
             }
