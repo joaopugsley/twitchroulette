@@ -144,9 +144,9 @@ export default function Home() {
       <title>TwitchRoulette</title>
       <div className="bg-purple w-screen h-screen flex justify-center items-center scroll-smooth">
         <div className="absolute right-2 top-2 flex flex-row w-auto select-none">
-          <Image alt="Português Brasileiro (pt-BR)" onClick={() => {setLang("pt")}} width={40} height={28} className="w-[40px] ml-[10px] h-auto cursor-pointer hover:scale-110" src="https://media.discordapp.net/attachments/1085074834523967569/1092597129018617886/image.png"/>
-          <Image alt="English (en-US)" onClick={() => {setLang("en")}} width={40} height={28} className="w-[40px] ml-[10px] h-auto cursor-pointer hover:scale-110" src="https://cdn.discordapp.com/attachments/1085074834523967569/1092597230248144896/image.png"/>
-          <Image alt="Español (es-ES)" onClick={() => {setLang("es")}} width={40} height={28} className="w-[40px] ml-[10px] h-auto cursor-pointer hover:scale-110" src="https://media.discordapp.net/attachments/1085074834523967569/1092821546931859526/image.png"/>
+          <Image alt="Português Brasileiro (pt-BR)" onClick={() => {setLang("pt")}} width={40} height={28} className="w-[40px] ml-[10px] h-auto cursor-pointer hover:scale-110" src="/images/brazil.png"/>
+          <Image alt="English (en-US)" onClick={() => {setLang("en")}} width={40} height={28} className="w-[40px] ml-[10px] h-auto cursor-pointer hover:scale-110" src="/images/usa.png"/>
+          <Image alt="Español (es-ES)" onClick={() => {setLang("es")}} width={40} height={28} className="w-[40px] ml-[10px] h-auto cursor-pointer hover:scale-110" src="/images/spain.png"/>
         </div>
         <div className="p-10 flex flex-col justify-center items-center">
           <h1 className="text-4xl font-extrabold text-white text-center select-none">TwitchRoulette!</h1>
