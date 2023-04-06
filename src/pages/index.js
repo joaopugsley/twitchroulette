@@ -150,7 +150,7 @@ export default function Home() {
         </div>
         <div className="p-10 flex flex-col justify-center items-center">
           <h1 className="text-4xl font-extrabold text-white text-center select-none">TwitchRoulette!</h1>
-          <h2 className="text-1xl mt-1 font-extralight text-gray-300 text-center select-none hover:text-white transition-all sm:text-[2.8vw]">{t("homescreen_slogan_1")}<a className="font-extrabold">stream</a>{t("homescreen_slogan_2")}</h2>
+          <h2 className="text-1xl mt-1 font-extralight text-gray-300 text-center select-none hover:text-white transition-all sm:text-[2.8vw]">{t("homescreen_slogan_1")}<span className="font-extrabold">stream</span>{t("homescreen_slogan_2")}</h2>
           <div onClick={scrollToStart} className="border border-white mt-3 pl-[20px] pr-[20px] h-[40px] rounded-xl flex flex-row justify-center items-center text-white select-none hover:scale-105 hover:bg-white hover:text-purple transition-all ease-in-out duration-50">{t("homescreen_start_button")}</div>
         </div>
       </div>
