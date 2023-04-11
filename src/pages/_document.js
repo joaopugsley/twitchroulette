@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <meta name="description" content="TwitchRoulette is a website that conducts giveaways for Twitch streamers. Make your broadcasts more fun with our giveaway tools."></meta>
+        <meta name="description" content="TwitchRoulette is the perfect platform for Twitch streamers to conduct custom giveaways. Easily create and personalize your giveaways in just a few clicks, with multipliers and keywords. Enhance engagement, loyalty, and drive traffic to your channel with TwitchRoulette."></meta>
         <meta name="keywords" content="Twitch, TwitchRoulette, giveaway, streamers, tools, broadcasts, roulette, livestreaming"></meta>
         <meta name="author" content="TwitchRoulette"></meta>
         <meta property="og:title" content="TwitchRoulette - Giveaways for Twitch Streamers"></meta>
