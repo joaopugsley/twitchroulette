@@ -143,7 +143,7 @@ export default function Home() {
     <main>
       <title>TwitchRoulette</title>
       <div className="bg-purple w-screen h-screen flex justify-center items-center scroll-smooth">
-        <div className="absolute right-2 top-2 flex flex-row w-auto select-none">
+        <div className="fixed right-2 top-2 flex flex-row w-auto select-none z-50">
           <Image alt="Português Brasileiro (pt-BR)" onClick={() => {setLang("pt")}} width={40} height={28} className="w-[40px] ml-[10px] h-auto cursor-pointer hover:scale-110" src="/images/brazil.png"/>
           <Image alt="English (en-US)" onClick={() => {setLang("en")}} width={40} height={28} className="w-[40px] ml-[10px] h-auto cursor-pointer hover:scale-110" src="/images/usa.png"/>
           <Image alt="Español (es-ES)" onClick={() => {setLang("es")}} width={40} height={28} className="w-[40px] ml-[10px] h-auto cursor-pointer hover:scale-110" src="/images/spain.png"/>
