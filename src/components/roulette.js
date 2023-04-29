@@ -5,8 +5,6 @@ export default function Roulette({ participants = [] }) {
 
     const { t } = useTranslation();
 
-    const RouletteRef = useRef();
-
     const [rolling, setRolling] = useState(false);
 
     const [rouletteFill, setRouletteFill] = useState([]);
@@ -18,8 +16,6 @@ export default function Roulette({ participants = [] }) {
     const [winner, setWinner] = useState(null);
 
     const roll = () => {
-
-        console.log(participants);
 
         if(rolling) {
             return;
@@ -37,7 +33,7 @@ export default function Roulette({ participants = [] }) {
 
         const Winner = entries[Math.floor(Math.random() * entries.length)];
 
-        const rouletteSize = RouletteRef.current.clientWidth;
+        const rouletteSize = window.innerWidth <= 767 ? 350 : 750;
         const blockSize = 100;
 
         const displayItems = Math.ceil(rouletteSize/blockSize);
@@ -78,14 +74,14 @@ export default function Roulette({ participants = [] }) {
     };
 
     return (
-        <div className="relative w-2/5 mt-7 pt-3 pb-3 bg-white rounded-xl drop-shadow-xl flex flex-col justify-center items-center sm:w-11/12">
+        <div className="relative w-[750px] mt-7 pt-3 pb-3 bg-white rounded-xl drop-shadow-xl flex flex-col justify-center items-center md:w-[350px]">
             <span className="font-extralight select-none text-gray-500 xl:relative xl:right-0">{participants.length} {t("active_entries_text")}</span>
             {
                 rolling ? (
                     <div className="absolute top-3 mt-8 bg-purple w-[10px] h-[10px] z-50 rotate-45"></div>
                 ) : null
             }
-            <div ref={RouletteRef} className="mt-3 flex flex-row overflow-hidden h-[100px] w-11/12 z-40" style={{height: `${rolling ? "100px" : "0px"}`}}>
+            <div className="mt-3 flex flex-row overflow-hidden h-[100px] w-11/12 z-40" style={{height: `${rolling ? "100px" : "0px"}`}}>
                 <div id="roulette__container" className="relative h-full min-w-fit flex flex-row" style={{transform: `translateX(-${roulettePosition}px)`, transition: `cubic-bezier(0.25, 0.46, 0.45, 1.0) ${rollDuration}ms`}}>
 
                     {
