@@ -17,5 +17,5 @@
 ## Futuro e Objetivos:
 - Adicionar mais opções de linguagem (<s>Espanhol</s>, Russo, etc...)
 - Mais configurações no sorteio.
-- Adicionar botão de re-roll & múltiplos vencedores.
+- Adicionar <s>botão de re-roll</s> & múltiplos vencedores.
 - Adicionar fotos de usuários na roleta (necessário a implementação de um back-end)
