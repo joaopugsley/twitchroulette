@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -99,17 +100,17 @@ export default function Roulette({ participants = [] }) {
          <span className="font-extralight select-none text-gray-500 xl:relative xl:right-0">{participants.length} {t("active_entries_text")}</span>
          {
             rolling ? (
-               <div className="absolute top-3 mt-8 bg-purple w-[10px] h-[10px] z-50 rotate-45"></div>
+               <div className="absolute top-3 mt-8 bg-purple w-[10px] h-[10px] z-40 rotate-45"></div>
             ) : null
          }
-         <div className="mt-3 flex flex-row overflow-hidden h-[100px] w-11/12 z-40" style={{ height: `${rolling ? "100px" : "0px"}` }}>
+         <div className="mt-3 flex flex-row overflow-hidden h-[100px] w-11/12 z-30" style={{ height: `${rolling ? "100px" : "0px"}` }}>
             <div id="roulette__container" className="relative h-full min-w-fit flex flex-row" style={{ transform: `translateX(-${roulettePosition}px)`, transition: `cubic-bezier(0.25, 0.46, 0.45, 1.0) ${rollDuration}ms` }}>
 
                {
                   rouletteFill.map((participant, i) => (
 
                      <div key={"proulette-" + i} className="w-[100px] h-[100px] bg-white border-[1px] border-r-0 border-solid border-purple flex flex-col justify-center items-center overflow-hidden">
-                        <span className="text-purple text-extrabold text-[0.6vw] sm:text-[3vw]">{participant.name}</span>
+                        <span className="text-purple text-extrabold text-xs sm:text-[3vw]">{participant.name}</span>
                         <span className="text-white text-extralight text-sm select-none bg-purple mt-[5px] pt-[1px] pb-[1px] pl-[5px] pr-[5px]">{`${participant.multiplier || 1}x`}</span>
                      </div>
 
@@ -139,16 +140,7 @@ export default function Roulette({ participants = [] }) {
 
          {
             !rolling && !winner ? (
-               <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38" stroke="#6441a5">
-                  <g fill="none" fill-rule="evenodd">
-                     <g transform="translate(1 1)" stroke-width="2">
-                        <circle stroke-opacity=".5" cx="18" cy="18" r="18" />
-                        <path d="M36 18c0-9.94-8.06-18-18-18">
-                           <animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="1s" repeatCount="indefinite" />
-                        </path>
-                     </g>
-                  </g>
-               </svg>
+               <Image alt="Loading" width={38} height={38} src="/images/loading.svg" />
             ) : null
          }
 

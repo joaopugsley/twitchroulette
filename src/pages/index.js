@@ -25,6 +25,9 @@ export default function Home() {
    const [started, setStarted] = useState(false);
    const [finished, setFinished] = useState(false);
 
+   // const [winner, setWinner] = useState(null);
+   // const [winnerMessages, setWinnerMessages] = useState([]);
+
    const formatParticipant = (user, isSubscriber, multipleEntries) => {
 
       if (started !== true || finished === true) return false; // giveaway not open
@@ -46,7 +49,6 @@ export default function Home() {
          setChannelInput(channelLink);
          localStorage.setItem("lastChannel", channelLink);
       }
-
       formatChannel(channelLink);
    }
 
@@ -136,7 +138,7 @@ export default function Home() {
 
       }
 
-   }, [ws, connected, started, finished, participants, channel, keyword, multipleEntries])
+   }, [ws, connected, started, finished, participants, channel, keyword, multipleEntries]);
 
    const scrollToStart = () => {
       scroller.scrollTo("start", {

@@ -11,6 +11,7 @@ export default function Document() {
         <meta property="og:description" content="Make your broadcasts more fun with our giveaway tools."></meta>
         <meta property="og:url" content="https://twitchroulette.live"></meta>
         <meta property="og:type" content="website"></meta>
+        <meta name="google-site-verification" content="zh3jsLwGQrCCKb3wfyTmDCUIiMRRs2_9dlbF1yZD8G8" />
       </Head>
       <body>
         <Main />
