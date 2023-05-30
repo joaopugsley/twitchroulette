@@ -21,6 +21,8 @@
         "advanced_options": "Advanced",
         "config_min_roulette_duration": "Min roll duration:",
         "config_max_roulette_duration": "Max roll duration:",
+        "config_blocked_users": "Blocked Users:",
+        "config_blocked_users_warning": "Blocked users cannot join the giveaway.",
         "active_keyword_1": "Type ",
         "active_keyword_2": " to join!",
         "active_entries_text": "entries",

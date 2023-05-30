@@ -21,6 +21,8 @@
         "advanced_options": "Avançado",
         "config_min_roulette_duration": "Duração mínima da roleta:",
         "config_max_roulette_duration": "Duração máxima da roleta:",
+        "config_blocked_users": "Usuários Bloqueados:",
+        "config_blocked_users_warning": "Usuários bloqueados não podem participar do sorteio.",
         "active_keyword_1": "Digite ",
         "active_keyword_2": " para participar!",
         "active_entries_text": "participantes",

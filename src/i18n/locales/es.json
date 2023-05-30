@@ -21,6 +21,8 @@
         "advanced_options": "Avanzado",
         "config_min_roulette_duration": "Duración mínima de la ruleta:",
         "config_max_roulette_duration": "Duración máxima de la ruleta:",
+        "config_blocked_users": "Usuarios Bloqueados:",
+        "config_blocked_users_warning": "Los usuarios bloqueados no pueden participar en el sorteo.",
         "active_keyword_1": "¡Escribe ",
         "active_keyword_2": " para participar!",
         "active_entries_text": "participantes",

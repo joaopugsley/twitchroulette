@@ -1,19 +1,20 @@
 import Image from 'next/image';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { scroller } from "react-scroll";
 import Roulette from "@/components/roulette";
 import { useTranslation } from "react-i18next";
 
 export default function Home() {
 
+    // languages
     const { t, i18n: { changeLanguage, language } } = useTranslation();
-
     const [lang, setLang] = useState(language);
-    const [channelInput, setChannelInput] = useState("");
 
+    // websockets
     const [ws, setSocket] = useState(null);
-    const [connected, setConnected] = useState(false)
+    const [connected, setConnected] = useState(false);
 
+    // app working
     const [channel, setChannel] = useState(null);
     const [title, setTitle] = useState(language == "en" ? "New Giveaway!" : "Novo Sorteio!");
     const [keyword, setKeyword] = useState(null);
@@ -21,12 +22,17 @@ export default function Home() {
     const [multipleEntries, setMultipleEntries] = useState(false);
     const [subMultiplier, setSubMultiplier] = useState(1);
 
+    const [channelInput, setChannelInput] = useState("");
+
     const [advancedDropdownOpened, setAdvancedDropdownOpened] = useState(false);
 
     const [minRouletteDuration, setMinRouletteDuration] = useState(10000);
     const [maxRouletteDuration, setMaxRouletteDuration] = useState(16000);
 
     const [participants, setParticipants] = useState([]);
+
+    const [blocked, setBlocked] = useState(["Nightbot", "StreamElements"]);
+    const blockedInputRef = useRef(null);
 
     const [started, setStarted] = useState(false);  
     const [finished, setFinished] = useState(false);
@@ -67,6 +73,24 @@ export default function Home() {
             localStorage.setItem("lastChannel", channelLink);
         }
         formatChannel(channelLink);
+    }
+
+    const removeBlockedUser = event => {
+        if(started === true) return;
+        const user = event.currentTarget.getAttribute("data-user");
+        setBlocked(oldArray => {
+            const newArray = [...oldArray];
+            newArray.splice(user, 1);
+            return newArray;
+        })
+    }
+
+    const addBlockedUser = () => {
+        if(started === true) return;
+        const user = blockedInputRef.current.value;
+        if(user === "" || user.includes(" ")) return;
+        blockedInputRef.current.value = "";
+        setBlocked(oldArray => [...oldArray, user]);
     }
 
     const formatChannel = (channelLink) => {
@@ -146,18 +170,16 @@ export default function Home() {
                 const author = message.find(msg => msg.startsWith("display-name")).split("=")[1];
                 const text = message.find(msg => msg.includes(`PRIVMSG #${channel}`)).split(`PRIVMSG #${channel} :`)[1];
                 const isSubscriber = message.find(msg => msg.startsWith("subscriber=")).split("subscriber=")[1] == "1";
+                const isBlocked = blocked.some(user => user.toLowerCase() === author.toLowerCase());
 
-                console.log(isSubscriber);
-
-                if (keyword && text.toLowerCase().includes(keyword.toLowerCase())) {
-                formatParticipant(author, isSubscriber, multipleEntries);
+                if (keyword && text.toLowerCase().includes(keyword.toLowerCase()) && !isBlocked) {
+                    formatParticipant(author, isSubscriber, multipleEntries);
                 }
-
             };
 
         }
 
-    }, [ws, connected, started, finished, participants, channel, keyword, multipleEntries]);
+    }, [ws, connected, started, finished, participants, channel, keyword, multipleEntries, blocked]);
 
     const scrollToStart = () => {
         scroller.scrollTo("start", {
@@ -237,6 +259,26 @@ export default function Home() {
                                             <p className="text-sm text-default sm:text-[3.3vw] mt-2">{t("config_max_roulette_duration")} (ms)</p>
                                             <input type="text" disabled={started} value={maxRouletteDuration} onChange={event => handleMaxRouletteDuration(event.target.value)} className="bg-gray-100 mt-1 p-2 rounded-md border text-default border-gray-300 focus:outline-purple w-[130px]" placeholder="10000 - 60000"/>
                                         </div>
+                                        <div className="mt-2 flex flex-col">
+                                            <span className="text-sm text-default sm:text-[3.3vw] mt-2">{t("config_blocked_users")}</span>
+                                            <div className="relative mt-1 flex flex-col py-[10px] px-[10px] min-h-[30px] min-w-[150px] max-w-full bg-gray-100 rounded-md border border-gray-300">
+                                                <div className="flex flex-row">
+                                                    <input ref={blockedInputRef} type="text" disabled={started} className="bg-gray-100 p-2 rounded-md border text-sm border-gray-300 focus:outline-purple w-[90px] h-[30px]" placeholder="Username"/>
+                                                    <div onClick={addBlockedUser} className="ml-1 w-[30px] h-[30px] bg-purple rounded-md text-white flex justify-center items-center select-none text-[25px]">+</div>
+                                                </div>
+                                                <div className="mt-1 flex flex-col">
+                                                    {
+                                                        blocked.map((user, i) => (
+                                                            <div className="mt-1 flex flex-row" key={"blockedList-" + i}>
+                                                                <div className="px-[10px] h-[30px] bg-purple rounded-md text-white flex justify-center items-center text-sm">{user}</div>
+                                                                <div data-user={i} onClick={removeBlockedUser} className="ml-1 w-[30px] h-[30px] bg-purple rounded-md text-white flex justify-center items-center select-none"><img src="./images/remove.svg" className="select-none" width={10} height={10}/></div>
+                                                            </div>
+                                                        ))
+                                                    }
+                                                </div>
+                                            </div>
+                                            <span className="text-gray-500 text-sm italic mt-1 font-extralight select-none">{t("config_blocked_users_warning")}</span>
+                                        </div>
                                     </div>
                                 ) : null
                             }
@@ -275,7 +317,7 @@ export default function Home() {
                                 {
                                     participants.reverse().map((participant, i) => (
 
-                                        <div key={"plist-" + i} className="w-full mt-1 p-2 pl-3 bg-default text-white text-extralight rounded-tl-md rounded-bl-md">{participant.name} {participant.subscriber === true ? (<a className="text-purple text-extrabold text-sm ml-1 select-none">[SUBSCRIBER] [{participant.multiplier}x]</a>) : null}</div>
+                                        <div key={"participantList-" + i} className="w-full mt-1 p-2 pl-3 bg-default text-white text-extralight rounded-tl-md rounded-bl-md">{participant.name} {participant.subscriber === true ? (<a className="text-purple text-extrabold text-sm ml-1 select-none">[SUBSCRIBER] [{participant.multiplier}x]</a>) : null}</div>
 
                                     ))
                                 }
