@@ -9,144 +9,13 @@ export default function Home() {
 
     const router = useRouter()
 
-    // languages
-    const { t, i18n: { changeLanguage, language } } = useTranslation();
-    const [lang, setLang] = useState(language);
-
-    // websockets
-    const [ws, setSocket] = useState(null);
-    const [connected, setConnected] = useState(false);
-
-    // app working
-    const [channel, setChannel] = useState(null);
-    const [title, setTitle] = useState(language == "en" ? "New Giveaway!" : "Novo Sorteio!");
-    const [keyword, setKeyword] = useState(null);
-    const [subOnly, setSubOnly] = useState(false);
-    const [multipleEntries, setMultipleEntries] = useState(false);
-    const [subMultiplier, setSubMultiplier] = useState(1);
-
-    const [channelInput, setChannelInput] = useState("");
-
-    const [advancedDropdownOpened, setAdvancedDropdownOpened] = useState(false);
-
-    const [minRouletteDuration, setMinRouletteDuration] = useState(10000);
-    const [maxRouletteDuration, setMaxRouletteDuration] = useState(16000);
-
-    const [participants, setParticipants] = useState([]);
-
-    const [blocked, setBlocked] = useState(["Nightbot", "StreamElements"]);
-    const blockedInputRef = useRef(null);
-
+    // APP WORKING
     const [started, setStarted] = useState(false);  
     const [finished, setFinished] = useState(false);
 
-    const [localStorageAvailable, setLocalStorageAvailable] = useState(false);
-
-    const formatParticipant = (user, isSubscriber, multipleEntries) => {
-
-        if (started !== true || finished === true) return false; // giveaway not open
-
-        if (!isSubscriber && subOnly === true) return false; // sub only
-
-        const multiplier = isSubscriber === true ? parseInt(subMultiplier) : 1;
-
-        const registered = participants.some(p => p.name == user);
-
-        if (registered === true && multipleEntries !== true) return false; // ja está participando
-
-        setParticipants(oldArray => [...oldArray, { name: user, multiplier: multiplier, subscriber: isSubscriber }]);
-
-    }
-
-    const testLocalStorage = () => {
-        if(localStorage) {
-            return true;
-        }
-        return false;
-    };
-
-    const toggleAdvancedDropdown = () => {
-        setAdvancedDropdownOpened(!advancedDropdownOpened);
-    }
-
-    const handleMinRouletteDuration = (duration) => {
-        if(isNaN(duration)) duration = 10000;
-        setMinRouletteDuration(duration);
-    }
-
-    const handleMaxRouletteDuration = (duration) => {
-        if(isNaN(duration)) duration = 16000;
-        setMaxRouletteDuration(duration);
-    }
-
-    const handleInputChange = (channelLink) => {
-        if (channelLink !== channelInput) {
-            setChannelInput(channelLink);
-            localStorage.setItem("lastChannel", channelLink);
-        }
-        formatChannel(channelLink);
-    }
-
-    const removeBlockedUser = event => {
-        if(started === true) return;
-        const user = event.currentTarget.getAttribute("data-user");
-        setBlocked(oldArray => {
-            const newArray = [...oldArray];
-            newArray.splice(user, 1);
-            return newArray;
-        })
-    }
-
-    const addBlockedUser = () => {
-        if(started === true) return;
-        const user = blockedInputRef.current.value;
-        if(user === "" || user.includes(" ")) return;
-        blockedInputRef.current.value = "";
-        setBlocked(oldArray => [...oldArray, user]);
-    }
-
-    const formatChannel = (channelLink) => {
-        channelLink = channelLink.toString().toLowerCase();
-        if (channelLink.includes("twitch.tv/")) {
-            const channelData = channelLink.split("twitch.tv/");
-            if (channelData.length < 0) return;
-            const channelName = channelData[1];
-            const invalid = ["@", "!", "#", "$", "%", "¨", "&", "*", "(", ")", "-", "+", "=", ".", ",", ":", "/", "?", "]", "[", "^", "~", "|"];
-            const isInvalid = invalid.some(char => channelName.includes(char));
-            if (isInvalid == true) return;
-            setChannel(channelName);
-        }
-    }
-
-    const connect = (channel) => {
-        // connect to twitch channel
-
-        const socket = new WebSocket("wss://irc-ws.chat.twitch.tv:443");
-
-        socket.onopen = () => {
-            socket.send(`CAP REQ :twitch.tv/tags twitch.tv/commands twitch.tv/membership`);
-            socket.send(`PASS SCHMOOPIIE`);
-            socket.send(`NICK justinfan12345`);
-            socket.send(`JOIN #${channel}`);
-        };
-
-        setSocket(socket);
-
-    };
-
-    useEffect(() => {
-
-        if(testLocalStorage() === true) {
-            setLocalStorageAvailable(true);
-        }
-
-    }, []);
-
-    useEffect(() => {
-        const lastChannel = localStorage.getItem("lastChannel") || "";
-        setChannelInput(lastChannel);
-        formatChannel(lastChannel);
-    }, [channelInput]);
+    // LANGUAGES
+    const { t, i18n: { changeLanguage, language } } = useTranslation();
+    const [lang, setLang] = useState(language);
 
     useEffect(() => {
 
@@ -168,6 +37,155 @@ export default function Home() {
         }
 
     }, []);
+
+    // LOCAL STORAGE
+    const [localStorageAvailable, setLocalStorageAvailable] = useState(false);
+
+    const testLocalStorage = () => {
+        if(localStorage) {
+            return true;
+        }
+        return false;
+    };
+
+    useEffect(() => {
+
+        if(testLocalStorage() === true) {
+            setLocalStorageAvailable(true);
+        }
+
+    }, []);
+
+    // CHANNEL
+    const [channelInput, setChannelInput] = useState("");
+
+    const handleInputChange = (channelLink) => {
+        if (channelLink !== channelInput) {
+            setChannelInput(channelLink);
+            localStorage.setItem("lastChannel", channelLink);
+        }
+        formatChannel(channelLink);
+    }
+
+    const [channel, setChannel] = useState(null);
+
+    const formatChannel = (channelLink) => {
+        channelLink = channelLink.toString().toLowerCase();
+        if (channelLink.includes("twitch.tv/")) {
+            const channelData = channelLink.split("twitch.tv/");
+            if (channelData.length < 0) return;
+            const channelName = channelData[1];
+            const invalid = ["@", "!", "#", "$", "%", "¨", "&", "*", "(", ")", "-", "+", "=", ".", ",", ":", "/", "?", "]", "[", "^", "~", "|"];
+            const isInvalid = invalid.some(char => channelName.includes(char));
+            if (isInvalid == true) return;
+            setChannel(channelName);
+        }
+    }
+
+    useEffect(() => {
+        const lastChannel = localStorage.getItem("lastChannel") || "";
+        setChannelInput(lastChannel);
+        formatChannel(lastChannel);
+    }, [channelInput]);
+
+    // TITLE
+    const [title, setTitle] = useState(language == "en" ? "New Giveaway!" : "Novo Sorteio!");
+
+    // KEYWORD
+    const [keyword, setKeyword] = useState(null);
+
+    // SUBONLY
+    const [subOnly, setSubOnly] = useState(false);
+
+    // MULTIPLE ENTRIES
+    const [multipleEntries, setMultipleEntries] = useState(false);
+
+    // SUB MULTIPLIER
+    const [subMultiplier, setSubMultiplier] = useState(1);
+
+    // ADVANCED OPTIONS DROPDOWN
+    const [advancedDropdownOpened, setAdvancedDropdownOpened] = useState(false);
+
+    const toggleAdvancedDropdown = () => {
+        setAdvancedDropdownOpened(!advancedDropdownOpened);
+    }
+
+    // MIN ROULETTE DURATION
+    const [minRouletteDuration, setMinRouletteDuration] = useState(10000);
+
+    const handleMinRouletteDuration = (duration) => {
+        if(isNaN(duration)) duration = 10000;
+        setMinRouletteDuration(duration);
+    }
+
+    // MAX ROULETTE DURATION
+    const [maxRouletteDuration, setMaxRouletteDuration] = useState(16000);
+
+    const handleMaxRouletteDuration = (duration) => {
+        if(isNaN(duration)) duration = 16000;
+        setMaxRouletteDuration(duration);
+    }
+
+    // BLOCKED USERS
+    const [blocked, setBlocked] = useState(["Nightbot", "StreamElements"]);
+    const blockedInputRef = useRef(null);
+
+    const removeBlockedUser = event => {
+        if(started === true) return;
+        const user = event.currentTarget.getAttribute("data-user");
+        setBlocked(oldArray => {
+            const newArray = [...oldArray];
+            newArray.splice(user, 1);
+            return newArray;
+        })
+    }
+
+    const addBlockedUser = () => {
+        if(started === true) return;
+        const user = blockedInputRef.current.value;
+        if(user === "" || user.includes(" ")) return;
+        blockedInputRef.current.value = "";
+        setBlocked(oldArray => [...oldArray, user]);
+    }
+
+    // PARTICIPANTS
+    const [participants, setParticipants] = useState([]);
+
+    const formatParticipant = (user, isSubscriber, multipleEntries) => {
+
+        if (started !== true || finished === true) return false; // giveaway not open
+
+        if (!isSubscriber && subOnly === true) return false; // sub only
+
+        const multiplier = isSubscriber === true ? parseInt(subMultiplier) : 1;
+
+        const registered = participants.some(p => p.name == user);
+
+        if (registered === true && multipleEntries !== true) return false; // already joined && multiple entries is off
+
+        setParticipants(oldArray => [...oldArray, { name: user, multiplier: multiplier, subscriber: isSubscriber }]);
+
+    }
+
+    // WEBSOCKETS
+    const [ws, setSocket] = useState(null);
+    const [connected, setConnected] = useState(false);
+
+    const connect = (channel) => {
+        // connect to twitch channel
+
+        const socket = new WebSocket("wss://irc-ws.chat.twitch.tv:443");
+
+        socket.onopen = () => {
+            socket.send(`CAP REQ :twitch.tv/tags twitch.tv/commands twitch.tv/membership`);
+            socket.send(`PASS SCHMOOPIIE`);
+            socket.send(`NICK justinfan12345`);
+            socket.send(`JOIN #${channel}`);
+        };
+
+        setSocket(socket);
+
+    };
 
     useEffect(() => {
 
@@ -201,6 +219,7 @@ export default function Home() {
 
     }, [ws, connected, started, finished, participants, channel, keyword, multipleEntries, blocked]);
 
+    // SCROLL FUNCTIONS
     const scrollToStart = () => {
         scroller.scrollTo("start", {
             duration: 600,
