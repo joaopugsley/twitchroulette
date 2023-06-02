@@ -1,5 +1,6 @@
 {
     "translation": {
+        "button_history": "Histórico",
         "homescreen_slogan_1": "Fazer sorteios em sua ",
         "homescreen_slogan_2": " nunca foi tão facil",
         "homescreen_start_button": "COMEÇAR",
@@ -39,6 +40,13 @@
         "footer_text_2": "por",
         "404_error_title": "Ops, algo deu errado.",
         "404_error_description": "Desculpe, não conseguimos localizar essa página.",
-        "404_homepage_button": "Voltar ao Início"
+        "404_homepage_button": "Voltar ao Início",
+        "history_page_title": "TwitchRoulette - Histórico",
+        "history_back": "Voltar",
+        "history_empty_title": "Nenhum resultado foi encontrado no seu histórico.",
+        "history_empty_description": "Novos resultados devem aparecer aqui",
+        "history_homepage_button": "Voltar ao Início",
+        "history_giveaway_winner": "Vencedor:",
+        "history_list_title": "Resultados Recentes:"
     }
 }

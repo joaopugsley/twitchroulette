@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { v4 as uuid } from 'uuid';
 
-export default function Roulette({participants = [], minRollDuration, maxRollDuration}) {
+export default function Roulette({participants = [], minRollDuration, maxRollDuration, giveawayTitle}) {
 
     const { t } = useTranslation();
 
@@ -14,9 +15,37 @@ export default function Roulette({participants = [], minRollDuration, maxRollDur
 
     const [rollDuration, setRollDuration] = useState(0);
 
+    const [raffle, setRaffle] = useState(uuid().toString());
+
     const [winner, setWinner] = useState(null);
 
     const [rerollTrigger, setRerollTrigger] = useState(false);
+
+    const updateGiveawayHistory = (winner) => {
+
+        let giveawayHistory = localStorage.getItem("giveawayHistory");
+
+        if(giveawayHistory) {
+            giveawayHistory = JSON.parse(giveawayHistory);
+        } else {
+            giveawayHistory = {}
+        }
+
+        const now = new Date();
+        const parsedNow = now.toLocaleDateString('pt-BR') + " - " + now.toLocaleTimeString('pt-BR', { hour: "numeric", minute: "numeric"});
+
+        giveawayHistory[raffle] = {
+            id: raffle,
+            title: giveawayTitle,
+            date: parsedNow.toString(),
+            winner: winner
+        }
+
+        giveawayHistory = JSON.stringify(giveawayHistory);
+
+        localStorage.setItem("giveawayHistory", giveawayHistory);
+
+    }
 
     const roll = () => {
 
@@ -75,6 +104,8 @@ export default function Roulette({participants = [], minRollDuration, maxRollDur
 
         setRoulettePosition((blockSize * rollFrames) - (blockSize * 0.4) + (Math.random() * blockSize * 0.8));
 
+        updateGiveawayHistory(Winner);
+
         setTimeout(() => {
             setWinner(Winner);
         }, rollDuration + 250);
@@ -105,7 +136,7 @@ export default function Roulette({participants = [], minRollDuration, maxRollDur
             <span className="font-extralight select-none text-gray-500 xl:relative xl:right-0">{participants.length} {t("active_entries_text")}</span>
             {
                 rolling ? (
-                <div className="absolute top-3 mt-8 bg-purple w-[10px] h-[10px] z-40 rotate-45"></div>
+                    <div className="absolute top-3 mt-8 bg-purple w-[10px] h-[10px] z-40 rotate-45"></div>
                 ) : null
             }
             <div className="mt-3 flex flex-row overflow-hidden h-[100px] w-11/12 z-30" style={{ height: `${rolling ? "100px" : "0px"}` }}>
@@ -128,30 +159,30 @@ export default function Roulette({participants = [], minRollDuration, maxRollDur
 
             {
                 winner && rolling ? (
-                <div className="w-full flex flex-col justify-center items-center">
-                    <span className="text-gray-500 text-sm mt-3 font-extralight select-none">{t("roulette_winner")} <a className="hover:text-purple select-text">{winner.name}</a></span>
-                    <div onClick={() => { resetAndReroll() }} className="border border-purple mt-3 pl-[20px] pr-[20px] h-[40px] rounded-xl flex flex-row justify-center items-center text-purple select-none hover:scale-105 transition-all ease-in-out duration-50">{t("roulette_redraw_button")}</div>
-                </div>
+                    <div className="w-full flex flex-col justify-center items-center">
+                        <span className="text-gray-500 text-sm mt-3 font-extralight select-none">{t("roulette_winner")} <a className="hover:text-purple select-text">{winner.name}</a></span>
+                        <div onClick={() => { resetAndReroll() }} className="border border-purple mt-3 pl-[20px] pr-[20px] h-[40px] rounded-xl flex flex-row justify-center items-center text-purple select-none hover:scale-105 transition-all ease-in-out duration-50">{t("roulette_redraw_button")}</div>
+                    </div>
                 ) : null
             }
 
             {
                 !winner && rolling === true ? (
-                <div className="w-full flex flex-col justify-center items-center">
-                    <span className="text-gray-500 text-sm mt-3 font-extralight select-none">{t("roulette_awaiting_winner")}</span>
-                </div>
+                    <div className="w-full flex flex-col justify-center items-center">
+                        <span className="text-gray-500 text-sm mt-3 font-extralight select-none">{t("roulette_awaiting_winner")}</span>
+                    </div>
                 ) : null
             }
 
             {
                 !rolling && !winner ? (
-                <Image alt="Loading" width={38} height={38} src="/images/loading.svg" />
+                    <Image alt="Loading" width={38} height={38} src="/images/loading.svg" />
                 ) : null
             }
 
             {
                 !rolling && !winner ? (
-                <div onClick={() => { roll() }} className="border border-purple mt-3 pl-[20px] pr-[20px] h-[40px] rounded-xl flex flex-row justify-center items-center text-purple select-none hover:scale-105 transition-all ease-in-out duration-50">{t("roulette_draw_button")}</div>
+                    <div onClick={() => { roll() }} className="border border-purple mt-3 pl-[20px] pr-[20px] h-[40px] rounded-xl flex flex-row justify-center items-center text-purple select-none hover:scale-105 transition-all ease-in-out duration-50">{t("roulette_draw_button")}</div>
                 ) : null
             }
 

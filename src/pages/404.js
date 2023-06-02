@@ -13,14 +13,14 @@ export default function Custom404() {
         const userLang = localStorage.getItem("preferredLanguage");
     
         if(userLang) {
-          changeLanguage(userLang);
+            changeLanguage(userLang);
         }
     
     }, []);
 
     return (
         <main>
-            <title>404 - TwitchRoulette</title>
+            <title>TwitchRoulette - 404</title>
             <div className="absolute bg-purple w-full h-full flex flex-col justify-center items-center">
                 <h1 className="text-white text-extrabold text-[10vh] select-none">404</h1>
                 <h2 className="text-white text-extralight text-[3vh] select-none">{t("404_error_title")}</h2>

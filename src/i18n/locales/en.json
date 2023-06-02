@@ -1,5 +1,6 @@
 {
     "translation": {
+        "button_history": "History",
         "homescreen_slogan_1": "Making giveaways on your ",
         "homescreen_slogan_2": " has never been so easy",
         "homescreen_start_button": "START NOW!",
@@ -39,6 +40,13 @@
         "footer_text_2": "by",
         "404_error_title": "Opps, something went wrong.",
         "404_error_description": "Sorry, we couldn't find your page",
-        "404_homepage_button": "Back to Homepage"
+        "404_homepage_button": "Back to Homepage",
+        "history_page_title": "TwitchRoulette - Giveaway History",
+        "history_back": "Homepage",
+        "history_empty_title": "No past giveaways were found.",
+        "history_empty_description": "New giveaway results will appear here",
+        "history_homepage_button": "Back to Homepage",
+        "history_giveaway_winner": "Winner:",
+        "history_list_title": "Past Giveaways:"
     }
 }
