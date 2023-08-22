@@ -1,7 +1,7 @@
 ## TwitchRoulette
 - Você pode testar o TwitchRoulette clicando <a href="https://twitchroulette.live/">aqui</a>.
 
-- Qualquer bug/problema deve ser reportado <a href="https://github.com/insannityxd/twitchroulette/issues">aqui</a> ou através do email joaopugsleyy@gmail.com.
+- Qualquer bug/problema deve ser reportado <a href="https://github.com/joaopugsley/twitchroulette/issues">aqui</a> ou através do email joaopugsleyy@gmail.com.
 
 ## Descrição e Motivo do projeto:
 - Este projeto foi criado para facilitar a realização de sorteios na twitch.tv por meio de uma roleta interativa.

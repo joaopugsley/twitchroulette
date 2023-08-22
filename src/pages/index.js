@@ -255,16 +255,16 @@ export default function Home() {
             </div>
             <div className="bg-purple w-screen h-screen flex justify-center items-center scroll-smooth">
                 <div className="p-10 flex flex-col justify-center items-center">
-                <h1 className="text-4xl font-extrabold text-white text-center">TwitchRoulette!</h1>
-                <h2 className="text-1xl mt-1 font-extralight text-gray-300 text-center select-none hover:text-white transition-all sm:text-[2.8vw]">{t("homescreen_slogan_1")}<span className="font-extrabold">stream</span>{t("homescreen_slogan_2")}</h2>
-                <div onClick={scrollToStart} className="border border-white mt-3 pl-[20px] pr-[20px] h-[40px] rounded-xl flex flex-row justify-center items-center text-white select-none hover:scale-105 hover:bg-white hover:text-purple transition-all ease-in-out duration-50">{t("homescreen_start_button")}</div>
+                    <h1 className="text-4xl font-extrabold text-white text-center">TwitchRoulette!</h1>
+                    <h2 className="text-1xl mt-1 font-extralight text-gray-300 text-center select-none hover:text-white transition-all sm:text-[2.8vw]">{t("homescreen_slogan_1")}<span className="font-extrabold">stream</span>{t("homescreen_slogan_2")}</h2>
+                    <div onClick={scrollToStart} className="border border-white mt-3 pl-[20px] pr-[20px] h-[40px] rounded-xl flex flex-row justify-center items-center text-white select-none hover:scale-105 hover:bg-white hover:text-purple transition-all ease-in-out duration-50">{t("homescreen_start_button")}</div>
                 </div>
             </div>
             <div id="start" className="relative bg-gray-100 w-screen min-h-[100vh] pt-[10vh] pb-[10vh] flex flex-col justify-center items-center scroll-smooth">
                 <div className="text-default text-3xl font-bold select-none break-all sm:text-xl">{t("config_title")}</div>
                 <div className="bg-white pt-5 pb-5 pl-7 pr-7 mt-7 rounded-xl drop-shadow-xl flex flex-col justify-center w-2/5 sm:w-4/5">
-                <h3 className="text-dark-default text-2xl font-extrabold select-none sm:text-[3.5vw]">{t("config_channellink")}<a href="https://twitch.tv/" target="_blank" className="text-purple hover:cursor-pointer">Twitch</a></h3>
-                <input type="text" disabled={started} value={channelInput} onChange={event => handleInputChange(event.target.value)} id="channel" className="bg-gray-100 mt-2 p-2 rounded-md border text-default border-gray-300 focus:outline-purple w-full" placeholder="URL" />
+                    <h3 className="text-dark-default text-2xl font-extrabold select-none sm:text-[3.5vw]">{t("config_channellink")}<a href="https://twitch.tv/" target="_blank" className="text-purple hover:cursor-pointer">Twitch</a></h3>
+                    <input type="text" disabled={started} value={channelInput} onChange={event => handleInputChange(event.target.value)} id="channel" className="bg-gray-100 mt-2 p-2 rounded-md border text-default border-gray-300 focus:outline-purple w-full" placeholder="URL" />
                 </div>
                 {channel ? (
                     <div className="bg-white pt-5 pb-5 pl-7 pr-7 mt-7 rounded-xl drop-shadow-xl flex flex-col justify-center w-2/5 sm:w-4/5">
@@ -389,7 +389,7 @@ export default function Home() {
                             </div>
                         )
                     }
-                    <div className="absolute bottom-[2%] text-white select-none">{t("footer_text_1")} ❤ {t("footer_text_2")} <a href="https://github.com/insannityxd/" className="text-purple hover:text-white hover:drop-shadow-xl">Insannity</a></div>
+                    <div className="absolute bottom-[2%] text-white select-none">{t("footer_text_1")} ❤ {t("footer_text_2")} <a href="https://github.com/joaopugsley/" className="text-purple hover:text-white hover:drop-shadow-xl">Insannity</a></div>
                 </div>
             ) : null}
         </main>
